@@ -1,0 +1,177 @@
+{
+	"info": {
+		"_postman_id": "7f1d6052-9cec-47ba-bd00-5ddf420e5ae3",
+		"name": "NETDATA",
+		"description": "Suggestions of API testing for NETDATA.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "SIMPLE API TESTS",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "94879b29-22ff-4631-be6f-dbb6a72859d7",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "42b2d136-fa13-4b4c-88f6-a31728fc2d08",
+						"exec": [
+							"// Tests response code",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// Tests response time",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"// Test whether the response matches the schema",
+							"var monitoring = JSON.parse(responseBody);",
+							"var schema;",
+							"var chartName = pm.variables.get(\"chartName\");",
+							"var points = pm.variables.get(\"points\");",
+							"var format = pm.variables.get(\"format\");",
+							"",
+							"if(chartName === \"system.ram\" && format === \"array\"){",
+							"    schema = JSON.parse(environment.ramArraySchema);",
+							"}else if(chartName === \"system.ram\" && format === \"json\"){",
+							"    schema = JSON.parse(environment.ramJsonSchema);",
+							"}else if(chartName === \"system.io\"){",
+							"    schema = JSON.parse(environment.ioArraySchema);",
+							"}else if(chartName === \"system.cpu\" && format === \"array\"){",
+							"    schema = JSON.parse(environment.cpuArraySchema);",
+							"}else if(chartName === \"system.cpu\" && format === \"json\"){",
+							"    schema = JSON.parse(environment.cpuJsonSchema);",
+							"}else if(chartName === \"system.ipv4\"){",
+							"    schema = JSON.parse(environment.ipv4ArraySchema);",
+							"}else if(chartName === \"system.swap\"){",
+							"    schema = JSON.parse(environment.swapArraySchema);",
+							"}",
+							"",
+							"tests[\"Monitoring schema is valid\"] = tv4.validate(monitoring, schema);",
+							"if (tv4.error){",
+							"    console.log(\"Validation failed: \", tv4.error);",
+							"}",
+							"",
+							"tests[\"API matches value 1\"] = monitoring.api === 1;",
+							"tests[\"ID matches \\\"\" + chartName + \"\\\"\"] = monitoring.id === chartName;",
+							"tests[\"NAME matches \\\"\" + chartName + \"\\\"\"] = monitoring.name === chartName;",
+							"tests[\"POINTS matches \\\"\" + points + \"\\\"\"] = monitoring.points >= points;",
+							"tests[\"FORMAT matches \\\"\" + format + \"\\\"\"] = monitoring.format === format;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:67.0) Gecko/20100101 Firefox/67.0"
+					},
+					{
+						"key": "Accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "en-US,en;q=0.5"
+					},
+					{
+						"key": "Cache-Control",
+						"value": "no-cache, no-store"
+					},
+					{
+						"key": "Pragma",
+						"value": "no-cache"
+					},
+					{
+						"key": "X-Requested-With",
+						"value": "XMLHttpRequest"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive"
+					},
+					{
+						"key": "Referer",
+						"value": "http://127.0.0.1:19999/"
+					},
+					{
+						"key": "Cookie",
+						"value": "_ga=GA1.1.863939707.1562366700; _gid=GA1.1.989761334.1562366700"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://127.0.0.1:19999/api/v1/data?chart={{chartName}}&format={{format}}&points={{points}}&group=average&gtime=0&options=ms%7Cflip%7Cjsonwrap%7Cnonzero&after=-420&_=1562368633406",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "19999",
+					"path": [
+						"api",
+						"v1",
+						"data"
+					],
+					"query": [
+						{
+							"key": "chart",
+							"value": "{{chartName}}",
+							"description": "Can be system.cpu, system.io, system.ipv4, system.ram or system.swap"
+						},
+						{
+							"key": "format",
+							"value": "{{format}}",
+							"description": "Can be array or json"
+						},
+						{
+							"key": "points",
+							"value": "{{points}}",
+							"description": "From 1 to 420"
+						},
+						{
+							"key": "group",
+							"value": "average"
+						},
+						{
+							"key": "gtime",
+							"value": "0"
+						},
+						{
+							"key": "options",
+							"value": "ms%7Cflip%7Cjsonwrap%7Cnonzero"
+						},
+						{
+							"key": "after",
+							"value": "-420"
+						},
+						{
+							"key": "_",
+							"value": "1562368633406"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,8 @@
+chartName,format,points
+system.cpu,array,100
+system.cpu,json,100
+system.io,array,100
+system.ipv4,array,100
+system.ram,array,100
+system.ram,json,100
+system.swap,array,100
