@@ -1,0 +1,95 @@
+{
+	"properties": {
+		"api": {
+			"type": "integer",
+			"minimum": 1,
+			"maximum": 1
+		},
+		"id": {
+			"type": "string",
+			"minLength": 10,
+			"maxLength": 10
+		},
+		"name": {
+			"type": "string",
+			"minLength": 10,
+			"maxLength": 10
+		},
+		"points": {
+			"type": "integer",
+			"minimum": 10,
+			"maximum": 420
+		},
+		"formats": {
+			"type": "string",
+			"minLength": 5,
+			"maxLength": 5
+		},
+		"view_update_every": {
+			"type": "integer",
+			"minimum": 1,
+			"maximum": 100
+		},
+		"update_every": {
+			"type": "integer",
+			"minimum": 1,
+			"maximum": 100
+		},
+		"first_entry": {
+			"type": "number"
+		},
+		"last_entry": {
+			"type": "number"
+		},
+		"before": {
+			"type": "number"
+		},
+		"after": {
+			"type": "number"
+		},
+		"dimension_names": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"minItems": 2,
+			"maxItems": 2,
+			"uniqueItems": true,
+			"additionalItems": false
+		},
+		"dimension_ids": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"minItems": 2,
+			"maxItems": 2,
+			"uniqueItems": true,
+			"additionalItems": false
+		},
+		"latest_values": {
+			"type": "array",
+			"minItems": 2,
+			"maxItems": 2,
+			"additionalItems": false,
+			"items": {
+				"type": "number"
+			}
+		},
+		"view_latest_values": {
+			"type": "array",
+			"minItems": 2,
+			"maxItems": 2,
+			"additionalItems": false,
+			"items": {
+				"type": "number"
+			}
+		},
+		"result": {
+			"type": "array",
+			"items": {
+				"type": "number"
+			}
+		}
+	}
+}
